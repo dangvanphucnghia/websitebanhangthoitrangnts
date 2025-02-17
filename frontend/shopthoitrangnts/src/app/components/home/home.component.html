@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FASHION NTS - Thời trang nam cao cấp, chất lượng, giá tốt nhất tại Việt Nam">
+    <meta name="keywords" content="thời trang nam, áo thun nam, quần jean nam, áo sơ mi nam, thời trang cao cấp">
+    <title>FASHION NTS - Thời trang nam cao cấp | Chất lượng hàng đầu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .carousel-item img {
+            height: 400px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <app-header></app-header>
+
+    <main>
+        <section class="hero-banner py-5">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-lg-8">
+                        <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active"
+                                    aria-current="true" aria-label="Slide 1"></button>
+                                <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1"
+                                    aria-label="Slide 2"></button>
+                            </div>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img src="https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                                        class="d-block w-100" alt="Bộ sưu tập mới 2024">
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <h2>Bộ sưu tập mới 2024</h2>
+                                        <p>Giảm giá đến 50%</p>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                                        class="d-block w-100" alt="Khuyến mãi đặc biệt">
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <h2>Ưu đãi đặc biệt</h2>
+                                        <p>Mua 2 tặng 1</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                                    class="w-100 img-cover" alt="Khuyến mãi đặc biệt" style="height: 190px;">
+                            </div>
+                            <div class="col-12">
+                                <img src="https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                                    class="w-100 img-cover" alt="Ưu đãi hot" style="height: 190px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="search-filter py-4 bg-light">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-lg-8 col-md-6">
+                        <div class="input-group">
+                            <input type="text" 
+                                   class="form-control" 
+                                   placeholder="Tìm kiếm sản phẩm..." 
+                                   [(ngModel)]="searchKeyword"
+                                   (keyup.enter)="onSearch()">
+                            <button class="btn btn-primary" 
+                                    type="button"
+                                    (click)="onSearch()">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+        
+
+        <section class="products-section py-5 bg-light">
+            <div class="container">
+                <h2 class="section-title text-center mb-4">Sản phẩm</h2>
+                
+                <div class="row g-4">
+                    <div *ngFor="let product of products" class="col-lg-3 col-md-4 col-sm-6">
+                        <article class="product-card h-100 border rounded overflow-hidden shadow-sm transition-hover">
+                            <div class="position-relative">
+                                <div class="product-image-container" style="height: 200px; overflow: hidden;">
+                                    <img [src]="getImageUrl(product.thumbnail)" [alt]="product.name"
+                                        (error)="onImageError($event)" class="img-fluid w-100 h-100"
+                                        style="object-fit: cover;">
+                                </div>
+                                <span class="badge bg-danger position-absolute top-0 start-0 m-2">-30%</span>
+                            </div>
+                            <div class="product-content p-3">
+                                <h3 class="product-name h6 mb-2 text-truncate">
+                                    <a href="#" class="text-decoration-none text-dark">{{product.name}}</a>
+                                </h3>
+                                <p class="product-description small mb-2 text-muted text-truncate">
+                                    {{product.description}}</p>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <div>
+                                        <span class="product-price fw-bold h5 mb-0">
+                                            {{product.price | number:'1.0-0'}}&nbsp;
+                                        </span>
+                                        <!-- <small class="text-muted text-decoration-line-through ms-2">
+              {{product.price * 1.3 | number:'1.0-0'}}&nbsp;đ
+            </small> -->
+                                    </div>
+                                    <div class="product-rating">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star-half-alt text-warning"></i>
+                                        <span class="small text-muted">(4.5)</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-outline-primary btn-sm flex-grow-1"
+                                        title="Thêm vào giỏ hàng">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                    <button class="btn btn-primary btn-sm flex-grow-1">Mua ngay</button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <div class="pagination mt-4 d-flex justify-content-center">
+                    <button (click)="prevPage()" [disabled]="currentPage === 1"
+                        class="btn btn-primary me-2">Previous</button>
+                    <span class="align-self-center">Page {{currentPage}} of {{totalPages}}</span>
+                    <button (click)="nextPage()" [disabled]="currentPage === totalPages"
+                        class="btn btn-primary ms-2">Next</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-section py-5">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-md-3 col-6">
+                        <div class="feature-item text-center">
+                            <i class="fas fa-truck fa-2x mb-3 text-primary"></i>
+                            <h4 class="h6">Giao hàng miễn phí</h4>
+                            <p class="small text-muted">Đơn hàng từ 500K</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="feature-item text-center">
+                            <i class="fas fa-sync-alt fa-2x mb-3 text-primary"></i>
+                            <h4 class="h6">Đổi trả dễ dàng</h4>
+                            <p class="small text-muted">30 ngày đổi trả</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="feature-item text-center">
+                            <i class="fas fa-shield-alt fa-2x mb-3 text-primary"></i>
+                            <h4 class="h6">Thanh toán an toàn</h4>
+                            <p class="small text-muted">Bảo mật 100%</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="feature-item text-center">
+                            <i class="fas fa-headset fa-2x mb-3 text-primary"></i>
+                            <h4 class="h6">Hỗ trợ 24/7</h4>
+                            <p class="small text-muted">Tư vấn miễn phí</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <app-footer></app-footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var myCarousel = document.querySelector('#mainCarousel');
+            var carousel = new bootstrap.Carousel(myCarousel, {
+                interval: 5000,
+                wrap: true,
+                pause: 'hover'
+            });
+
+            // Xử lý sự kiện khi người dùng sử dụng phím mũi tên
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'ArrowLeft') {
+                    carousel.prev();
+                } else if (event.key === 'ArrowRight') {
+                    carousel.next();
+                }
+            });
+
+            // Tự động tạm dừng khi hover chuột
+            myCarousel.addEventListener('mouseenter', function () {
+                carousel.pause();
+            });
+            myCarousel.addEventListener('mouseleave', function () {
+                carousel.cycle();
+            });
+        });
+    </script>
+</body>
+
+</html>
