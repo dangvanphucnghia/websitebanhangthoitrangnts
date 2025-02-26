@@ -11,111 +11,182 @@
 
 <body>
     <app-header></app-header>
-    <div class="container order-container">
-        <div class="row">
-            <!-- Form Section -->
-            <div class="col-md-5">
-                <div class="form-section">
-                    <h3>Thông tin người nhận</h3>
-                    <form>
-                        <div class="mb-3">
-                            <label class="form-label">Họ và tên</label>
-                            <input type="text" class="form-control" placeholder="Nhập họ và tên">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Email</label>
-                            <input type="email" class="form-control" placeholder="Nhập email">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Số điện thoại</label>
-                            <input type="tel" class="form-control" placeholder="Nhập số điện thoại">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Địa chỉ</label>
-                            <textarea class="form-control" rows="3" placeholder="Nhập địa chỉ"></textarea>
-                        </div>
-                    </form>
-                </div>
+<div class="container order-container mt-4">
+  <div class="row">
+    <!-- Form Section -->
+    <div class="col-md-5">
+      <div class="form-section p-4 shadow-sm rounded bg-white">
+        <h3 class="mb-4">Thông tin người nhận</h3>
+        <form [formGroup]="orderForm">
+          <div class="mb-3">
+            <label class="form-label">Họ và tên</label>
+            <input 
+              type="text" 
+              class="form-control" 
+              formControlName="fullName" 
+              placeholder="Nhập họ và tên"
+              [ngClass]="{'is-invalid': hasError('fullName', 'required') || hasError('fullName', 'minlength')}">
+            <div *ngIf="hasError('fullName', 'required')" class="invalid-feedback">
+              Vui lòng nhập họ và tên
             </div>
+            <div *ngIf="hasError('fullName', 'minlength')" class="invalid-feedback">
+              Họ và tên phải có ít nhất 3 ký tự
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input 
+              type="email" 
+              class="form-control" 
+              formControlName="email" 
+              placeholder="Nhập email"
+              [ngClass]="{'is-invalid': hasError('email', 'required') || hasError('email', 'email')}">
+            <div *ngIf="hasError('email', 'required')" class="invalid-feedback">
+              Vui lòng nhập email
+            </div>
+            <div *ngIf="hasError('email', 'email')" class="invalid-feedback">
+              Email không hợp lệ
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Số điện thoại</label>
+            <input 
+              type="tel" 
+              class="form-control" 
+              formControlName="phoneNumber" 
+              placeholder="Nhập số điện thoại"
+              [ngClass]="{'is-invalid': hasError('phoneNumber', 'required') || hasError('phoneNumber', 'pattern')}">
+            <div *ngIf="hasError('phoneNumber', 'required')" class="invalid-feedback">
+              Vui lòng nhập số điện thoại
+            </div>
+            <div *ngIf="hasError('phoneNumber', 'pattern')" class="invalid-feedback">
+              Số điện thoại không hợp lệ
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Địa chỉ</label>
+            <textarea 
+              class="form-control" 
+              formControlName="address" 
+              rows="3" 
+              placeholder="Nhập địa chỉ"
+              [ngClass]="{'is-invalid': hasError('address', 'required') || hasError('address', 'minlength')}"></textarea>
+            <div *ngIf="hasError('address', 'required')" class="invalid-feedback">
+              Vui lòng nhập địa chỉ
+            </div>
+            <div *ngIf="hasError('address', 'minlength')" class="invalid-feedback">
+              Địa chỉ phải đầy đủ (tối thiểu 10 ký tự)
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Ghi chú (không bắt buộc)</label>
+            <textarea 
+              class="form-control" 
+              formControlName="note" 
+              rows="2" 
+              placeholder="Nhập ghi chú nếu có"></textarea>
+          </div>
+        </form>
+      </div>
+    </div>
 
-            <!-- Order Table Section -->
-            <div class="col-md-7">
-                <div class="order-table">
-                    <h3>Sản phẩm đã đặt</h3>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th style="width: 45%">Sản phẩm</th>
-                                    <th style="width: 20%">Đơn giá</th>
-                                    <th style="width: 20%">Số lượng</th>
-                                    <th style="width: 15%">Tổng</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="product-info">
-                                            <img src="https://images.pexels.com/photos/135620/pexels-photo-135620.jpeg?auto=compress&cs=tinysrgb&w=600"
-                                                alt="Áo thun nam" class="product-image">
-                                            <div class="product-details">
-                                                <div class="product-name">Áo thun nam</div>
-                                                <div class="product-category">Thời trang nam</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="price">150.000đ</td>
-                                    <td>
-                                        <div class="quantity-control">
-                                            <button class="btn-quantity">-</button>
-                                            <input type="number" class="quantity-input" value="1" min="1">
-                                            <button class="btn-quantity">+</button>
-                                        </div>
-                                    </td>
-                                    <td class="total-price">150.000đ</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+    <!-- Order Table Section -->
+    <div class="col-md-7">
+      <div class="order-table p-4 shadow-sm rounded bg-white">
+        <h3 class="mb-4">Sản phẩm đã đặt</h3>
+        
+        <div *ngIf="cartItems.length === 0" class="text-center p-4">
+          <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
+          <p>Giỏ hàng của bạn hiện đang trống</p>
+          <button class="btn btn-primary" routerLink="/">Tiếp tục mua sắm</button>
+        </div>
 
-                    <!-- Promo Code Section -->
-                    <div class="promo-section">
-                        <div class="row">
-                            <div class="col-8">
-                                <input type="text" class="form-control promo-input" placeholder="Nhập mã giảm giá">
-                            </div>
-                            <div class="col-4">
-                                <button class="btn btn-primary btn-apply w-100">Áp dụng</button>
-                            </div>
-                        </div>
+        <div *ngIf="cartItems.length > 0" class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="width: 45%">Sản phẩm</th>
+                <th style="width: 20%">Đơn giá</th>
+                <th style="width: 20%">Số lượng</th>
+                <th style="width: 15%">Tổng</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of cartItems">
+                <td>
+                  <div class="product-info d-flex">
+                    <img [src]="item.product.thumbnail" [alt]="item.product.name" class="product-image" style="width: 80px; height: 80px; object-fit: cover;">
+                    <div class="product-details ms-3">
+                      <div class="product-name fw-bold">{{item.product.name}}</div>
+                      <div class="product-category text-muted">{{item.product.category}}</div>
+                      <div *ngIf="item.color" class="text-muted small">Màu: {{item.color}}</div>
+                      <div *ngIf="item.size" class="text-muted small">Size: {{item.size}}</div>
                     </div>
+                  </div>
+                </td>
+                <td class="price">{{item.product.price | number}}đ</td>
+                <td>
+                  <div class="quantity-control d-flex align-items-center">
+                    <button class="btn btn-sm btn-outline-secondary" (click)="updateQuantity(item.product.id, -1)">-</button>
+                    <input type="number" class="form-control form-control-sm mx-2" style="width: 50px" [value]="item.quantity" readonly>
+                    <button class="btn btn-sm btn-outline-secondary" (click)="updateQuantity(item.product.id, 1)">+</button>
+                  </div>
+                </td>
+                <td class="total-price text-end fw-bold">{{item.product.price * item.quantity | number}}đ</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-                    <!-- Total Section -->
-                    <div class="total-section">
-                        <div class="d-flex justify-content-between">
-                            <span>Tổng tiền hàng:</span>
-                            <span>450.000đ</span>
-                        </div>
-                        <div class="d-flex justify-content-between mt-2">
-                            <span>Giảm giá:</span>
-                            <span>-50.000đ</span>
-                        </div>
-                        <div class="d-flex justify-content-between mt-2">
-                            <span>Tổng thanh toán:</span>
-                            <span class="text-danger">400.000đ</span>
-                        </div>
-                    </div>
-
-                    <!-- Action Buttons -->
-                    <div class="action-buttons">
-                        <button class="btn btn-outline-primary btn-order" routerLink="/order/order-confirm">Tiếp tục mua hàng</button>
-                        <button class="btn btn-primary btn-order">Đặt hàng</button>
-                    </div>
+        <!-- Promo Code Section -->
+        <div class="promo-section">
+            <div class="row">
+                <div class="col-8">
+                    <input type="text" class="form-control promo-input" placeholder="Nhập mã giảm giá">
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-primary btn-apply w-100">Áp dụng</button>
                 </div>
             </div>
         </div>
+
+
+        <!-- Total Section -->
+        <div class="total-section mt-4 p-3 bg-light rounded">
+          <div class="d-flex justify-content-between">
+            <span>Tổng tiền hàng:</span>
+            <span>{{totalAmount | number}}đ</span>
+          </div>
+          <div class="d-flex justify-content-between mt-2">
+            <span>Giảm giá:</span>
+            <span>-{{discount | number}}đ</span>
+          </div>
+          <div class="d-flex justify-content-between mt-2 fw-bold">
+            <span>Tổng thanh toán:</span>
+            <span class="text-danger fs-5">{{finalAmount | number}}đ</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons mt-4 d-flex justify-content-between">
+            <button class="btn btn-outline-primary btn-order" routerLink="/order/order-confirm">Tiếp tục mua hàng</button>
+          <button 
+            class="btn btn-primary" 
+            (click)="submitOrder()" 
+            [disabled]="loading || cartItems.length === 0">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+            Đặt hàng
+          </button>
+        </div>
+      </div>
     </div>
-    <app-footer></app-footer>
+  </div>
+</div>
+<app-footer></app-footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

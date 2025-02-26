@@ -7,12 +7,12 @@ import { OrderConfirmComponent } from "./components/order-confirm/order-confirm.
 
 export const routes: Routes = [
   {
-    path: "", // thêm path riêng cho home
+    path: "",
     component: HomeComponent,
   },
   {
-    path: "register", // empty path cho trang mặc định
-    component: RegisterComponent, // Register là trang mặc định
+    path: "register",
+    component: RegisterComponent,
   },
 
   {
