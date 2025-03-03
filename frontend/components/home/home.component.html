@@ -83,28 +83,23 @@
                 <div class="row g-4">
                     <div class="col-lg-8 col-md-6">
                         <div class="input-group">
-                            <input type="text" 
-                                   class="form-control" 
-                                   placeholder="Tìm kiếm sản phẩm..." 
-                                   [(ngModel)]="searchKeyword"
-                                   (keyup.enter)="onSearch()">
-                            <button class="btn btn-primary" 
-                                    type="button"
-                                    (click)="onSearch()">
+                            <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm..."
+                                [(ngModel)]="searchKeyword" (keyup.enter)="onSearch()">
+                            <button class="btn btn-primary" type="button" (click)="onSearch()">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </section>
-        
+
 
         <section class="products-section py-5 bg-light">
             <div class="container">
                 <h2 class="section-title text-center mb-4">Sản phẩm</h2>
-                
+
                 <div class="row g-4">
                     <div *ngFor="let product of products" class="col-lg-3 col-md-4 col-sm-6">
                         <article class="product-card h-100 border rounded overflow-hidden shadow-sm transition-hover">
@@ -140,12 +135,29 @@
                                         <span class="small text-muted">(4.5)</span>
                                     </div>
                                 </div>
+                                <!-- Trong phần hiển thị sản phẩm -->
                                 <div class="d-flex gap-2">
-                                    <button class="btn btn-outline-primary btn-sm flex-grow-1"
-                                        title="Thêm vào giỏ hàng">
+                                    <button class="btn btn-outline-primary btn-sm flex-grow-1" title="Thêm vào giỏ hàng"
+                                        (click)="addToCart(product)">
                                         <i class="fas fa-shopping-cart"></i>
                                     </button>
-                                    <button class="btn btn-primary btn-sm flex-grow-1">Mua ngay</button>
+                                    <button class="btn btn-primary btn-sm flex-grow-1" (click)="buyNow(product)">
+                                        Mua ngay
+                                    </button>
+                                </div>
+
+                                <!-- Thêm thông báo thành công -->
+                                <div *ngIf="successMessage" class="toast-container position-fixed top-0 end-0 p-3">
+                                    <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                                        <div class="toast-header bg-success text-white">
+                                            <strong class="me-auto">Thông báo</strong>
+                                            <button type="button" class="btn-close"
+                                                (click)="successMessage = ''"></button>
+                                        </div>
+                                        <div class="toast-body">
+                                            {{ successMessage }}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </article>

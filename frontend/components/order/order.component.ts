@@ -1,16 +1,15 @@
 import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { FooterComponent } from "../footer/footer.component"; // Import FooterComponent
+import { FooterComponent } from "../footer/footer.component";
 import { HeaderComponent } from "../header/header.component";
 import { RouterModule, Router } from "@angular/router";
-import { ReactiveFormsModule } from "@angular/forms";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { CartItem } from "../../dtos/order/cart.item";
-import { FormGroup } from "@angular/forms";
-import { FormBuilder } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { OrderRequest } from "../../dtos/order/order.requpest";
 import { OrderService } from "../../services/order.service";
 import { HttpClientModule } from "@angular/common/http";
-import { Validators } from "@angular/forms";
+
 @Component({
   selector: "app-order",
   standalone: true,
@@ -20,6 +19,7 @@ import { Validators } from "@angular/forms";
     HeaderComponent,
     RouterModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
   ],
   templateUrl: "./order.component.html",
@@ -54,6 +54,12 @@ export class OrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCartItems();
+
+    // Đăng ký theo dõi thay đổi từ giỏ hàng nếu OrderService có BehaviorSubject
+    this.orderService.cartItems$.subscribe((items) => {
+      this.cartItems = items;
+      this.calculateTotals();
+    });
   }
 
   loadCartItems(): void {
@@ -66,11 +72,25 @@ export class OrderComponent implements OnInit {
     this.calculateTotals();
   }
 
+  removeItem(productId: number): void {
+    // Thêm phương thức này vào OrderService nếu chưa có
+    if (this.orderService.removeFromCart) {
+      this.orderService.removeFromCart(productId);
+    } else {
+      const updatedCart = this.cartItems.filter(
+        (item) => item.product.id !== productId
+      );
+      this.cartItems = updatedCart;
+      this.orderService.saveCartItems(updatedCart);
+      this.calculateTotals();
+    }
+  }
+
   calculateTotals(): void {
     this.totalAmount = this.orderService.calculateTotal(this.cartItems);
     // Giả sử đã có giảm giá 50.000đ (có thể thay bằng API trong thực tế)
-    this.discount = 50000;
-    this.finalAmount = this.totalAmount - this.discount;
+    this.discount = this.totalAmount > 0 ? 50000 : 0;
+    this.finalAmount = Math.max(0, this.totalAmount - this.discount);
   }
 
   applyPromoCode(): void {
@@ -83,7 +103,7 @@ export class OrderComponent implements OnInit {
     this.orderService.applyPromoCode(this.promoCode).subscribe({
       next: (response) => {
         this.discount = response.discount;
-        this.finalAmount = this.totalAmount - this.discount;
+        this.finalAmount = Math.max(0, this.totalAmount - this.discount);
         this.loading = false;
         this.errorMessage = "";
       },
@@ -130,6 +150,9 @@ export class OrderComponent implements OnInit {
         // Xóa giỏ hàng sau khi đặt hàng thành công
         localStorage.removeItem("cart");
 
+        // Xóa cartItems trong service
+        this.orderService.clearCart();
+
         // Chuyển hướng đến trang xác nhận đơn hàng
         this.router.navigate(["/order/order-confirm"], {
           state: { orderId: response.id },
@@ -138,6 +161,7 @@ export class OrderComponent implements OnInit {
         this.loading = false;
       },
       error: (error) => {
+        console.error("Error creating order:", error);
         this.errorMessage = "Có lỗi xảy ra khi đặt hàng. Vui lòng thử lại sau.";
         this.loading = false;
       },
@@ -145,10 +169,6 @@ export class OrderComponent implements OnInit {
   }
 
   // Helper methods for form validation
-  get formControls() {
-    return this.orderForm.controls;
-  }
-
   hasError(controlName: string, errorType: string): boolean {
     const control = this.orderForm.get(controlName);
     return (

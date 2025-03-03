@@ -1,0 +1,52 @@
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-pending {
+    background-color: #FFF3CD;
+    color: #856404;
+}
+
+.status-processing {
+    background-color: #D1ECF1;
+    color: #0C5460;
+}
+
+.status-shipped {
+    background-color: #D4EDDA;
+    color: #155724;
+}
+
+.status-delivered {
+    background-color: #C3E6CB;
+    color: #155724;
+}
+
+.status-cancelled {
+    background-color: #F8D7DA;
+    color: #721C24;
+}
+
+.action-btn {
+    padding: 5px 10px;
+    margin: 0 2px;
+    font-size: 12px;
+}
+
+.search-filter {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.order-table th {
+    background-color: #f8f9fa;
+}
+
+.pagination {
+    margin-top: 20px;
+}

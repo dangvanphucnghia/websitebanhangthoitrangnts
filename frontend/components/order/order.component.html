@@ -11,182 +11,166 @@
 
 <body>
     <app-header></app-header>
-<div class="container order-container mt-4">
-  <div class="row">
-    <!-- Form Section -->
-    <div class="col-md-5">
-      <div class="form-section p-4 shadow-sm rounded bg-white">
-        <h3 class="mb-4">Thông tin người nhận</h3>
-        <form [formGroup]="orderForm">
-          <div class="mb-3">
-            <label class="form-label">Họ và tên</label>
-            <input 
-              type="text" 
-              class="form-control" 
-              formControlName="fullName" 
-              placeholder="Nhập họ và tên"
-              [ngClass]="{'is-invalid': hasError('fullName', 'required') || hasError('fullName', 'minlength')}">
-            <div *ngIf="hasError('fullName', 'required')" class="invalid-feedback">
-              Vui lòng nhập họ và tên
+    <div class="container order-container my-4">
+        <div class="row">
+            <!-- Form Section -->
+            <div class="col-md-5">
+                <div class="form-section p-4 shadow-sm rounded bg-white">
+                    <h3 class="mb-4">Thông tin người nhận</h3>
+                    <form [formGroup]="orderForm">
+                        <div class="mb-3">
+                            <label class="form-label">Họ và tên <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="fullName" placeholder="Nhập họ và tên"
+                                [ngClass]="{'is-invalid': hasError('fullName', 'required') || hasError('fullName', 'minlength')}">
+                            <div *ngIf="hasError('fullName', 'required')" class="invalid-feedback">
+                                Vui lòng nhập họ và tên
+                            </div>
+                            <div *ngIf="hasError('fullName', 'minlength')" class="invalid-feedback">
+                                Họ và tên phải có ít nhất 3 ký tự
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" formControlName="email" placeholder="Nhập email"
+                                [ngClass]="{'is-invalid': hasError('email', 'required') || hasError('email', 'email')}">
+                            <div *ngIf="hasError('email', 'required')" class="invalid-feedback">
+                                Vui lòng nhập email
+                            </div>
+                            <div *ngIf="hasError('email', 'email')" class="invalid-feedback">
+                                Email không hợp lệ
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Số điện thoại <span class="text-danger">*</span></label>
+                            <input type="tel" class="form-control" formControlName="phoneNumber" placeholder="Nhập số điện thoại"
+                                [ngClass]="{'is-invalid': hasError('phoneNumber', 'required') || hasError('phoneNumber', 'pattern')}">
+                            <div *ngIf="hasError('phoneNumber', 'required')" class="invalid-feedback">
+                                Vui lòng nhập số điện thoại
+                            </div>
+                            <div *ngIf="hasError('phoneNumber', 'pattern')" class="invalid-feedback">
+                                Số điện thoại không hợp lệ
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Địa chỉ <span class="text-danger">*</span></label>
+                            <textarea class="form-control" formControlName="address" rows="3" placeholder="Nhập địa chỉ"
+                                [ngClass]="{'is-invalid': hasError('address', 'required') || hasError('address', 'minlength')}"></textarea>
+                            <div *ngIf="hasError('address', 'required')" class="invalid-feedback">
+                                Vui lòng nhập địa chỉ
+                            </div>
+                            <div *ngIf="hasError('address', 'minlength')" class="invalid-feedback">
+                                Địa chỉ phải đầy đủ (tối thiểu 10 ký tự)
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Ghi chú (không bắt buộc)</label>
+                            <textarea class="form-control" formControlName="note" rows="2" placeholder="Nhập ghi chú (nếu có)"></textarea>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div *ngIf="hasError('fullName', 'minlength')" class="invalid-feedback">
-              Họ và tên phải có ít nhất 3 ký tự
-            </div>
-          </div>
-          
-          <div class="mb-3">
-            <label class="form-label">Email</label>
-            <input 
-              type="email" 
-              class="form-control" 
-              formControlName="email" 
-              placeholder="Nhập email"
-              [ngClass]="{'is-invalid': hasError('email', 'required') || hasError('email', 'email')}">
-            <div *ngIf="hasError('email', 'required')" class="invalid-feedback">
-              Vui lòng nhập email
-            </div>
-            <div *ngIf="hasError('email', 'email')" class="invalid-feedback">
-              Email không hợp lệ
-            </div>
-          </div>
-          
-          <div class="mb-3">
-            <label class="form-label">Số điện thoại</label>
-            <input 
-              type="tel" 
-              class="form-control" 
-              formControlName="phoneNumber" 
-              placeholder="Nhập số điện thoại"
-              [ngClass]="{'is-invalid': hasError('phoneNumber', 'required') || hasError('phoneNumber', 'pattern')}">
-            <div *ngIf="hasError('phoneNumber', 'required')" class="invalid-feedback">
-              Vui lòng nhập số điện thoại
-            </div>
-            <div *ngIf="hasError('phoneNumber', 'pattern')" class="invalid-feedback">
-              Số điện thoại không hợp lệ
-            </div>
-          </div>
-          
-          <div class="mb-3">
-            <label class="form-label">Địa chỉ</label>
-            <textarea 
-              class="form-control" 
-              formControlName="address" 
-              rows="3" 
-              placeholder="Nhập địa chỉ"
-              [ngClass]="{'is-invalid': hasError('address', 'required') || hasError('address', 'minlength')}"></textarea>
-            <div *ngIf="hasError('address', 'required')" class="invalid-feedback">
-              Vui lòng nhập địa chỉ
-            </div>
-            <div *ngIf="hasError('address', 'minlength')" class="invalid-feedback">
-              Địa chỉ phải đầy đủ (tối thiểu 10 ký tự)
-            </div>
-          </div>
-          
-          <div class="mb-3">
-            <label class="form-label">Ghi chú (không bắt buộc)</label>
-            <textarea 
-              class="form-control" 
-              formControlName="note" 
-              rows="2" 
-              placeholder="Nhập ghi chú nếu có"></textarea>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- Order Table Section -->
-    <div class="col-md-7">
-      <div class="order-table p-4 shadow-sm rounded bg-white">
-        <h3 class="mb-4">Sản phẩm đã đặt</h3>
-        
-        <div *ngIf="cartItems.length === 0" class="text-center p-4">
-          <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
-          <p>Giỏ hàng của bạn hiện đang trống</p>
-          <button class="btn btn-primary" routerLink="/">Tiếp tục mua sắm</button>
-        </div>
-
-        <div *ngIf="cartItems.length > 0" class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <th style="width: 45%">Sản phẩm</th>
-                <th style="width: 20%">Đơn giá</th>
-                <th style="width: 20%">Số lượng</th>
-                <th style="width: 15%">Tổng</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of cartItems">
-                <td>
-                  <div class="product-info d-flex">
-                    <img [src]="item.product.thumbnail" [alt]="item.product.name" class="product-image" style="width: 80px; height: 80px; object-fit: cover;">
-                    <div class="product-details ms-3">
-                      <div class="product-name fw-bold">{{item.product.name}}</div>
-                      <div class="product-category text-muted">{{item.product.category}}</div>
-                      <div *ngIf="item.color" class="text-muted small">Màu: {{item.color}}</div>
-                      <div *ngIf="item.size" class="text-muted small">Size: {{item.size}}</div>
+    
+            <!-- Order Table Section -->
+            <div class="col-md-7">
+                <div class="order-table p-4 shadow-sm rounded bg-white">
+                    <h3 class="mb-4">Sản phẩm đã đặt</h3>
+                    
+                    <!-- Empty cart message -->
+                    <div *ngIf="cartItems.length === 0" class="text-center py-5">
+                        <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
+                        <p class="mb-4">Giỏ hàng của bạn đang trống</p>
+                        <button class="btn btn-primary" routerLink="/">Tiếp tục mua sắm</button>
                     </div>
-                  </div>
-                </td>
-                <td class="price">{{item.product.price | number}}đ</td>
-                <td>
-                  <div class="quantity-control d-flex align-items-center">
-                    <button class="btn btn-sm btn-outline-secondary" (click)="updateQuantity(item.product.id, -1)">-</button>
-                    <input type="number" class="form-control form-control-sm mx-2" style="width: 50px" [value]="item.quantity" readonly>
-                    <button class="btn btn-sm btn-outline-secondary" (click)="updateQuantity(item.product.id, 1)">+</button>
-                  </div>
-                </td>
-                <td class="total-price text-end fw-bold">{{item.product.price * item.quantity | number}}đ</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Promo Code Section -->
-        <div class="promo-section">
-            <div class="row">
-                <div class="col-8">
-                    <input type="text" class="form-control promo-input" placeholder="Nhập mã giảm giá">
-                </div>
-                <div class="col-4">
-                    <button class="btn btn-primary btn-apply w-100">Áp dụng</button>
+                    
+                    <!-- Cart items -->
+                    <div *ngIf="cartItems.length > 0" class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 45%">Sản phẩm</th>
+                                    <th style="width: 20%" class="text-center">Đơn giá</th>
+                                    <th style="width: 20%" class="text-center">Số lượng</th>
+                                    <th style="width: 15%" class="text-end">Tổng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of cartItems">
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img [src]="item.product.thumbnail" [alt]="item.product.name" 
+                                                 class="me-3 rounded" style="width: 70px; height: 70px; object-fit: cover;">
+                                            <div>
+                                                <div class="fw-bold">{{item.product.name}}</div>
+                                                <div class="text-muted small">{{item.product.category}}</div>
+                                                <button class="btn btn-sm text-danger p-0 mt-1" (click)="removeItem(item.product.id)">
+                                                    <i class="fas fa-trash-alt me-1"></i>Xóa
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center align-middle">{{item.product.price | number:'1.0-0'}}₫</td>
+                                    <td class="text-center align-middle">
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <button class="btn btn-sm btn-outline-secondary" (click)="updateQuantity(item.product.id, -1)">-</button>
+                                            <input type="number" class="form-control form-control-sm mx-2 text-center" style="width: 50px" 
+                                                   [value]="item.quantity" readonly>
+                                            <button class="btn btn-sm btn-outline-secondary" (click)="updateQuantity(item.product.id, 1)">+</button>
+                                        </div>
+                                    </td>
+                                    <td class="text-end align-middle fw-bold">{{item.product.price * item.quantity | number:'1.0-0'}}₫</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+    
+                    <!-- Promo Code Section -->
+                    <div *ngIf="cartItems.length > 0" class="promo-section mt-4">
+                        <div class="row">
+                            <div class="col-md-8 mb-2 mb-md-0">
+                                <input type="text" class="form-control" [(ngModel)]="promoCode" placeholder="Nhập mã giảm giá">
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-primary w-100" [disabled]="loading" (click)="applyPromoCode()">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                                    Áp dụng
+                                </button>
+                            </div>
+                        </div>
+                        <div *ngIf="errorMessage" class="text-danger mt-2 small">{{errorMessage}}</div>
+                    </div>
+    
+                    <!-- Total Section -->
+                    <div *ngIf="cartItems.length > 0" class="total-section mt-4 p-3 bg-light rounded">
+                        <div class="d-flex justify-content-between">
+                            <span>Tổng tiền hàng:</span>
+                            <span>{{totalAmount | number:'1.0-0'}}₫</span>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <span>Giảm giá:</span>
+                            <span>-{{discount | number:'1.0-0'}}₫</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <span class="fw-bold">Tổng thanh toán:</span>
+                            <span class="fw-bold text-danger fs-5">{{finalAmount | number:'1.0-0'}}₫</span>
+                        </div>
+                    </div>
+    
+                    <!-- Action Buttons -->
+                    <div *ngIf="cartItems.length > 0" class="action-buttons mt-4 d-flex gap-2">
+                        <button class="btn btn-outline-primary flex-grow-1" routerLink="/">
+                            <i class="fas fa-arrow-left me-2"></i>Tiếp tục mua hàng
+                        </button>
+                        <button class="btn btn-primary flex-grow-1" [disabled]="orderForm.invalid || loading || cartItems.length === 0" (click)="submitOrder()">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                            Đặt hàng
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-
-
-        <!-- Total Section -->
-        <div class="total-section mt-4 p-3 bg-light rounded">
-          <div class="d-flex justify-content-between">
-            <span>Tổng tiền hàng:</span>
-            <span>{{totalAmount | number}}đ</span>
-          </div>
-          <div class="d-flex justify-content-between mt-2">
-            <span>Giảm giá:</span>
-            <span>-{{discount | number}}đ</span>
-          </div>
-          <div class="d-flex justify-content-between mt-2 fw-bold">
-            <span>Tổng thanh toán:</span>
-            <span class="text-danger fs-5">{{finalAmount | number}}đ</span>
-          </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="action-buttons mt-4 d-flex justify-content-between">
-            <button class="btn btn-outline-primary btn-order" routerLink="/order/order-confirm">Tiếp tục mua hàng</button>
-          <button 
-            class="btn btn-primary" 
-            (click)="submitOrder()" 
-            [disabled]="loading || cartItems.length === 0">
-            <span *ngIf="loading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
-            Đặt hàng
-          </button>
-        </div>
-      </div>
     </div>
-  </div>
-</div>
-<app-footer></app-footer>
+    <app-footer></app-footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
